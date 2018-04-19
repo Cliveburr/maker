@@ -1,0 +1,12 @@
+<div class="public-container" fxLayout="column" fxLayoutAlign="start stretch">
+  <mat-toolbar fxFlex class="mat-elevation-z6">
+    <span mat-button [routerLink]="['/home']">Maker</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-button [routerLink]="['/prepare']">Prepare</button>
+    <button mat-button [routerLink]="['/devices']">Devices</button>
+    <button mat-button [routerLink]="['/simulate']">Simulate</button>
+  </mat-toolbar>
+  <div fxFlex fxLayout="row" [fxLayoutAlign]="layoutAlign" class="container">
+    <router-outlet></router-outlet>
+  </div>
+</div>
