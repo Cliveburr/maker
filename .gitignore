@@ -6,10 +6,13 @@ bin/
 Web/**/*.js
 Web/**/*.js.map
 Web/**/*.css
-dist/
 package-lock.json
 
 !Web/systemjs.config.js
 !Web/webpack.*.config.js
 
 #test
+
+dist/
+build/
+debug/
