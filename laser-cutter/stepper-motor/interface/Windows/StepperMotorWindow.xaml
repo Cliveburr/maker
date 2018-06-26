@@ -1,0 +1,80 @@
+﻿<Window x:Class="StepperMotorInterface.Windows.StepperMotorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StepperMotorInterface.Windows"
+        xmlns:ctr="clr-namespace:MetricLibrary.Controls;assembly=MetricLibrary"
+        mc:Ignorable="d"
+        Title="Stepper Motor Driver" Height="687" Width="1102.187">
+    <Grid>
+        <TabControl x:Name="tabControl">
+            <TabItem Header="Info">
+                <Grid Margin="3" Background="#FFE5E5E5">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                            <Button Margin="3" Content="Get Driver Info" Width="100" Click="btGetDriverInfo_Click"></Button>
+                        </StackPanel>
+                        <GroupBox Margin="3" Header="Info">
+                            <StackPanel HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="3">Clock:</Label>
+                                    <ctr:FrequencyControl x:Name="fcDriverInfoClock" Margin="3" Width="200"></ctr:FrequencyControl>
+                                    <Label Margin="3">Channels:</Label>
+                                    <TextBox Margin="3" x:Name="tbDriverInfoChannels" Width="100" IsReadOnly="True"></TextBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Channel 0">
+                <Grid Margin="5" Background="#FFE5E5E5">
+                    <DockPanel>
+                        <GroupBox Margin="5" DockPanel.Dock="Top" Header="Channel:">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Margin="5" Content="Get Channel Info" Width="100" Click="btChannel0_GetChannelInfo_Click"></Button>
+                                    <Button Margin="5" Content="Set Channel Info" Width="100" Click="btChannel0_SetChannelInfo_Click"></Button>
+                                </StackPanel>
+                                <ComboBox x:Name="cbChannel0_Mode" Margin="5" SelectedIndex="0">
+                                    <ComboBoxItem Content="Full Step" />
+                                </ComboBox>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Margin="5" DockPanel.Dock="Top" Header="Step:">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <Button Margin="5" Content="Send Steps" Width="100" Click="btChannel0_SendSteps_Click"></Button>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                                    <RadioButton x:Name="rbChannel0_Foward" Margin="15" Content="Forward" IsChecked="True" />
+                                    <RadioButton Margin="15" Content="Backward" />
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                                    <Label Margin="5" Content="Steps:" />
+                                    <TextBox x:Name="tbChannel0_Steps" Margin="5" Width="100" Text="1"></TextBox>
+                                    <CheckBox x:Name="cbChannel0_Continuous" Margin="5">Continuous</CheckBox>
+                                </StackPanel>
+                            </DockPanel>
+                        </GroupBox>
+                        <GroupBox Margin="5" DockPanel.Dock="Top" Header="PWM:">
+                            <StackPanel Margin="5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="5" Content="Running Frequency:" />
+                                    <ctr:FrequencyControl x:Name="fcChannel0_Running" Margin="5" Width="200"></ctr:FrequencyControl>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Margin="5" Content="Torque Frequency:" />
+                                    <ctr:FrequencyControl x:Name="fcChannel0_Torque" Margin="5" Width="200"></ctr:FrequencyControl>
+                                </StackPanel>
+                                <Slider x:Name="slChannel0_TorqueDuty" Margin="5" Delay="500" Maximum="100" Minimum="0" Value="30" ValueChanged="slChannel0_TorqueDuty_ValueChanged"/>
+                                <Label x:Name="lbChannel0_TorqueDutyDisplay" Margin="5" Content="Torque duty: 30%" />
+                            </StackPanel>
+                        </GroupBox>
+                    </DockPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

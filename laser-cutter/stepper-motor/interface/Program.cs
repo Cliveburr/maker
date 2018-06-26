@@ -1,46 +1,24 @@
-﻿using DroneV0Soft.App.Motor;
-using DroneV0Soft.App.Motor.Transport;
-using DroneV0Soft.App.Windows;
-using MetricLibrary;
+﻿using StepperMotorInterface.StepperMotor.Transport;
+using StepperMotorInterface.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using static DroneV0Soft.App.Motor.Message.TesterMessages;
 
-namespace DroneV0Soft.App
+namespace StepperMotorInterface
 {
     public static class Program
     {
         public static Application App { get; private set; }
         public static MainWindow MainWindow { get; private set; }
-        public static MotorWindow[] MotorWindow { get; private set; }
-        public static ConfigurationWindow ConfigurationWindow { get; set; }
-        public static MotorController Motor { get; private set; }
+        public static StepperMotorWindow[] StepperMotorWindow { get; private set; }
 
         [STAThread]
         public static void Main()
         {
-            //var test = new TimerEventTester();
-            //test.TestRotine();
-
-            MotorWindow = new MotorWindow[4];
-
-            var usbTransport = new UsbTransport();
-            //usbTransport.OnRemoved += () => Dispatcher.Invoke(() => Close());
-
-            Motor = new MotorController();
-            Motor.Transport = usbTransport;
-
-            //var request = new CrossZeroPortSelectRequest
-            //{
-            //    Step = (char)1
-            //};
-            //Program.Motor.Transport.SendMessage(request);
-
-            LoadConfigurations();
+            StepperMotorWindow = new StepperMotorWindow[1];
 
             MainWindow = new MainWindow();
             MainWindow.Show();
@@ -48,12 +26,6 @@ namespace DroneV0Soft.App
             App = new Application();
             App.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             App.Run();
-        }
-
-        private static void LoadConfigurations()
-        {
-            Motor.ClockFrequency = new Frequency(48000000);
-            Motor.Steps = 36;
         }
 
         public static void Close()
@@ -74,40 +46,25 @@ namespace DroneV0Soft.App
             });
         }
 
-        public static void ShowMotorWindow(int index)
+        public static void ShowStepperMotorWindow<T>(int index) where T: ITransport
         {
-            var motorWindow = MotorWindow[index];
+            var stepperMotorWindow = StepperMotorWindow[index];
 
-            if (motorWindow == null)
+            if (stepperMotorWindow == null)
             {
-                motorWindow = new MotorWindow(index);
-                if (motorWindow.IsEnabled)
+                var transport = Activator.CreateInstance<T>();
+                stepperMotorWindow = new StepperMotorWindow(transport);
+                StepperMotorWindow[index] = stepperMotorWindow;
+                stepperMotorWindow.Closed += (object sender, EventArgs e) =>
                 {
-                    MotorWindow[index] = motorWindow;
-                    motorWindow.Closed += (object sender, EventArgs e) =>
-                    {
-                        MotorWindow[index] = null;
-                    };
+                    StepperMotorWindow[index] = null;
+                };
 
-                    motorWindow.Show();
-                }
+                stepperMotorWindow.Show();
             }
             else
             {
-                motorWindow.Activate();
-            }
-        }
-
-        public static void ShowConfigurationWindow()
-        {
-            if (ConfigurationWindow == null)
-            {
-                ConfigurationWindow = new ConfigurationWindow();
-                ConfigurationWindow.Show();
-            }
-            else
-            {
-                ConfigurationWindow.Activate();
+                stepperMotorWindow.Activate();
             }
         }
     }

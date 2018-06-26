@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StepperMotorInterface.StepperMotor.Transport;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace DroneV0Soft.App.Windows
+namespace StepperMotorInterface.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -26,7 +27,7 @@ namespace DroneV0Soft.App.Windows
 
         private void Drive0_Click(object sender, RoutedEventArgs e)
         {
-            Program.ShowMotorWindow(0);
+            Program.ShowStepperMotorWindow<UsbTransport>(0);
         }
 
         private void Window_Closed(object sender, EventArgs e)

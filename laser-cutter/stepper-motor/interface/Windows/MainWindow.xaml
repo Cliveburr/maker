@@ -1,9 +1,9 @@
-﻿<Window x:Class="DroneV0Soft.App.Windows.MainWindow"
+﻿<Window x:Class="StepperMotorInterface.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DroneV0Soft.App.Windows"
+        xmlns:local="clr-namespace:StepperMotorInterface.Windows"
         mc:Ignorable="d"
         Closed="Window_Closed"
         Title="Drone" Height="286.301" Width="416.438" WindowStartupLocation="CenterScreen">

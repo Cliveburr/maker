@@ -7,8 +7,8 @@
     <ProjectGuid>{9CA42678-5131-4770-BB9A-6B3C861058B8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DroneV0Soft.App</RootNamespace>
-    <AssemblyName>DroneV0Soft.App</AssemblyName>
+    <RootNamespace>StepperMotorInterface</RootNamespace>
+    <AssemblyName>StepperMotorInterface</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -52,58 +52,34 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MicroTimerEvent.cs" />
-    <Compile Include="Motor\ChannelModeEnum.cs" />
-    <Compile Include="Motor\ChannelStateEnum.cs" />
-    <Compile Include="Motor\Message\ChannelChangeMode.cs" />
-    <Compile Include="Motor\Message\ChannelChangeState.cs" />
-    <Compile Include="Motor\Message\ChannelInfo.cs" />
-    <Compile Include="Motor\Message\ChannelManualConfig.cs" />
-    <Compile Include="Motor\Message\ChannelPWM.cs" />
-    <Compile Include="Motor\Message\ChannelManualStep.cs" />
-    <Compile Include="Motor\Message\ChannelStepCounting.cs" />
-    <Compile Include="Motor\Message\ConfigStartStopCurve.cs" />
-    <Compile Include="Motor\Message\IMessageResponse.cs" />
-    <Compile Include="Motor\Message\IMessageRequest.cs" />
-    <Compile Include="Motor\Message\MessageIndexEnum.cs" />
-    <Compile Include="Motor\Message\TesterMessages.cs" />
-    <Compile Include="Motor\MotorController.cs" />
-    <Compile Include="Motor\Transport\ITransport.cs" />
+    <Compile Include="StepperMotor\Enum\ChannelModeEnum.cs" />
+    <Compile Include="StepperMotor\Message\SetChannelInfoMessage.cs" />
+    <Compile Include="StepperMotor\Message\GetChannelInfoMessage.cs" />
+    <Compile Include="StepperMotor\Message\GetDriverInfoMessage.cs" />
+    <Compile Include="StepperMotor\Message\IMessageResponse.cs" />
+    <Compile Include="StepperMotor\Message\IMessageRequest.cs" />
+    <Compile Include="StepperMotor\Enum\MessageIndexEnum.cs" />
+    <Compile Include="StepperMotor\StepperMotorDriver.cs" />
+    <Compile Include="StepperMotor\Transport\ITransport.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="TimerEventTester.cs" />
-    <Compile Include="VirtualMotor.cs" />
-    <Compile Include="Windows\ConfigurationWindow.xaml.cs">
-      <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="Windows\ConfigurationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\MotorWindow.xaml">
+    <Page Include="Windows\StepperMotorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Motor\Transport\UsbTransport.cs" />
-    <Compile Include="Windows\MotorWindow.xaml.cs">
-      <DependentUpon>MotorWindow.xaml</DependentUpon>
+    <Compile Include="StepperMotor\Transport\UsbTransport.cs" />
+    <Compile Include="Windows\StepperMotorWindow.xaml.cs">
+      <DependentUpon>StepperMotorWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ProbeWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProbeWindow.xaml.cs">
-      <DependentUpon>ProbeWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,20 +104,17 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\AutoHome\Communication\USB\Library\UsbHidLibrary\UsbHidLibrary.csproj">
       <Project>{733b8d65-3baf-4608-ae81-2ce14ca06805}</Project>
       <Name>UsbHidLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Drone\MetricLibrary\MetricLibrary.csproj">
+      <Project>{1624701a-813d-48bf-bc62-0756d756d447}</Project>
+      <Name>MetricLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\NativeNET\NativeNET\NativeNET.csproj">
       <Project>{435ac815-9d77-4f2b-a751-10393e05de89}</Project>
       <Name>NativeNET</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\MetricLibrary\MetricLibrary.csproj">
-      <Project>{1624701a-813d-48bf-bc62-0756d756d447}</Project>
-      <Name>MetricLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
