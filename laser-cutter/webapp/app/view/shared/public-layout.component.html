@@ -1,12 +1,13 @@
-<div class="public-container" fxLayout="column" fxLayoutAlign="start stretch">
-  <mat-toolbar fxFlex class="mat-elevation-z6">
-    <span mat-button [routerLink]="['/home']">Maker</span>
-    <span class="fill-remaining-space"></span>
-    <button mat-button [routerLink]="['/prepare']">Prepare</button>
-    <button mat-button [routerLink]="['/devices']">Devices</button>
-    <button mat-button [routerLink]="['/simulate']">Simulate</button>
-  </mat-toolbar>
-  <div fxFlex fxLayout="row" [fxLayoutAlign]="layoutAlign" class="container">
-    <router-outlet></router-outlet>
-  </div>
-</div>
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark" dropdown>
+  <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+</nav>
+<!-- <div class="container-fluid">
+  <!-- <router-outlet></router-outlet>
+</div> -->
+
+<twod-editor></twod-editor>

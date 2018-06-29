@@ -2,9 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'body',
-    template: '<router-outlet></router-outlet>',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./app.component.scss']
+    template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
 

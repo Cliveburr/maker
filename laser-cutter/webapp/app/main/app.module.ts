@@ -1,35 +1,18 @@
-//import 'rxjs/Rx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
+import { BotDesignModule } from '../botdesign';
 import { AppComponent } from './app.component';
 import { AppRouting, VIEWS } from './app.routing';
 import { BaseView } from '../view';
 import { SERVICES } from '../service';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import {
-    MatButtonModule, MatCheckboxModule, MatToolbarModule, MatMenuModule, MatCardModule, MatFormFieldModule, MatInputModule
-} from '@angular/material';
-const MATERIAL = [
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule
-];
+import { ALL_EDITORS } from '../editors';
 
 @NgModule({
-    imports: [BrowserModule, FormsModule, MATERIAL, AppRouting],
+    imports: [BrowserModule, FormsModule, BotDesignModule, AppRouting],
     bootstrap: [AppComponent],
-    declarations: [AppComponent, VIEWS],
+    declarations: [AppComponent, VIEWS, ALL_EDITORS],
     providers: [SERVICES, BaseView]
 })
 export class AppModule {
