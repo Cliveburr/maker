@@ -1,20 +1,24 @@
-import { Entity, EventDelegate } from "../entity";
+import { Entity } from "../entity";
 import { IDrawContext, Draw } from "../draw";
 import { Rectangle } from "../util/math";
-import { Event } from '../util/event';
+import { IEvent } from '../util/event';
+import { Draggable } from "./draggable";
+import { Selectable } from "./selectable";
 
 export class Rect extends Entity {
 
-    public mouseout = new Event<EventDelegate>(this);
-    public mousein = new Event<EventDelegate>(this);
+    private isPress = false;
+
     public interactive = true;
+    public drag: Draggable;
+    public select: Selectable;
 
     public constructor(
         public options: IRectOptions
     ) {
         super(new Rectangle(options.x, options.y, options.width, options.height));
-        this.mousein.sub(this.onmousein);
-        this.mouseout.sub(this.onmouseout);
+        this.select = new Selectable(this);
+        this.drag = new Draggable(this);
     }
 
     public draw(ctx: IDrawContext): void {
@@ -28,13 +32,6 @@ export class Rect extends Entity {
         this.needToDraw = false;
     }
 
-    private onmousein(ctx: IDrawContext): void {
-        console.log('in');
-    }
-
-    private onmouseout(ctx: IDrawContext): void {
-        console.log('out');
-    }
 }
 
 export interface IRectOptions {

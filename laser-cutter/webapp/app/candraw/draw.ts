@@ -1,5 +1,4 @@
 import { Entity } from "./entity";
-import { Input } from "./input";
 
 export class Draw {
 
@@ -72,12 +71,14 @@ export class Draw {
         this.ctx.fillRect(x, y, w, h);
         return this;
     }
+
+    public strokeRect(x: number, y: number, w: number, h: number): this {
+        this.ctx.strokeRect(x, y, w, h);
+        return this;
+    }
 }
 
 export interface IDrawContext {
     time: number;
-    input: Input;
-    lastInput: Input;
     mouseOver: Entity | null;
-    lastMouseOver: Entity | null;
 }

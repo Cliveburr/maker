@@ -1,11 +1,8 @@
 import { IDrawContext, Draw } from "./draw";
-import { Rectangle } from "./util/math";
-import { Event } from './util/event';
+import { Rectangle, Point } from "./util/math";
+import { EventsHandler, IEvent } from './util/event';
 import { Container } from './container';
-
-export interface EventDelegate {
-    (ctx: IDrawContext): void;
-}
+import { Canvas } from "./canvas";
 
 export abstract class Entity {
     
@@ -14,12 +11,10 @@ export abstract class Entity {
     public needToDraw: boolean = true;
     public zorder: number = 0;
     public cache: Draw;
-    public parent: Entity;
+    public parent: Container;
+    public canvas: Canvas
 
-    public mouseout?: Event<EventDelegate>;
-    public mousein?: Event<EventDelegate>;
-    public mousemove?: Event<EventDelegate>;
-    public mousebutton?: Event<EventDelegate>;
+    public event = new EventsHandler();
 
     public constructor(
         public area: Rectangle
@@ -31,4 +26,23 @@ export abstract class Entity {
     public isContainer(): this is Container {
         return typeof (<any>this)['getEntityOn'] !== 'undefined';
     }
+
+    public move(pos: Point): void {
+        this.area.x = pos.x;
+        this.area.y = pos.y;
+        this.parent.needToDraw = true;
+        this.canvas.triggerEvent('move', this, true);
+    }
+
+    // public onmouseenter(): void {
+    //     console.log('mouseenter', this);
+    // }
+
+    // public onmouseout(): void {
+    //     console.log('mouseout', this);
+    // }
+
+    // public onmousemove(): void {
+    //     //console.log('mousemove', this);
+    // }
 }

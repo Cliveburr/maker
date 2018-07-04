@@ -45,6 +45,7 @@ export class TwoDEditorComponent implements OnInit {
     //private view: fabric.Group;
 
     private can: Canvas;
+    private view: Grid;
 
     public constructor() {
         this.options = {
@@ -93,7 +94,7 @@ export class TwoDEditorComponent implements OnInit {
             height: 30,
             fill: '#000000'
         })
-        this.can.add(rect);
+        this.view.add(rect);
 
     //     this.can.add(new fabric.Circle({ 
     //         left: 300, 
@@ -180,13 +181,13 @@ export class TwoDEditorComponent implements OnInit {
     }
 
     private generateGrid(): void {
-        let grid = new Grid(this.options.marginX, this.options.marginY, this.options.width, this.options.height, {
+        this.view = new Grid(this.options.marginX, this.options.marginY, this.options.width, this.options.height, {
             size: this.options.grid.size,
             color: this.options.grid.color,
             boldColor: this.options.grid.boldColor,
             infoInterval: this.options.infoInterval
         });
-        this.can.add(grid);
+        this.can.add(this.view);
 
     //     let options2 = <fabric.IObjectOptions>{
     //         stroke: this.options.grid.color,

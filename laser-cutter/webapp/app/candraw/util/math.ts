@@ -1,9 +1,36 @@
 
 export class Point {
+
     public constructor(
         public x: number,
         public y: number
     ) {
+    }
+
+    public sub(point: Point): Point {
+        return new Point(
+            this.x - point.x,
+            this.y - point.y);
+    }
+
+    public plus(point: Point): Point {
+        return new Point(
+            this.x + point.x,
+            this.y + point.y);
+    }
+
+    public min(...points: Point[]): Point {
+        return new Point(
+            Math.min(...points.map(p => p.x)),
+            Math.min(...points.map(p => p.y))
+        );
+    }
+
+    public max(...points: Point[]): Point {
+        return new Point(
+            Math.max(...points.map(p => p.x)),
+            Math.max(...points.map(p => p.y))
+        );
     }
 }
 
@@ -15,7 +42,7 @@ export class Size {
     }
 }
 
-export class Rectangle implements Point, Size {
+export class Rectangle {
 
     public x: number;
     public y: number;
@@ -54,5 +81,44 @@ export class Rectangle implements Point, Size {
         }
 
         return ((x >= this.x && x <= this.x + this.width - 1) && (y >= this.y && y <= this.y + this.height - 1));
+    }
+
+    public sub(rectangle: Rectangle): Rectangle {
+        return new Rectangle(
+            this.x - rectangle.x,
+            this.y - rectangle.y,
+            this.width - rectangle.width,
+            this.height - rectangle.height);
+    }
+
+    public plus(point: Point): Rectangle;
+    public plus(rectangle: Rectangle): Rectangle;
+    public plus(a0: Rectangle | Point): Rectangle {
+        if (a0 instanceof Rectangle) {
+            return new Rectangle(
+                this.x + a0.x,
+                this.y + a0.y,
+                this.width + a0.width,
+                this.height + a0.height);
+        }
+        else {
+            return new Rectangle(
+                this.x + a0.x,
+                this.y + a0.y,
+                this.width,
+                this.height);
+        }
+    }
+
+    public expand(value: number): Rectangle {
+        return new Rectangle(this.x - value, this.y - value, this.width + (value * 2), this.height + (value * 2));
+    }
+
+    public clone(): Rectangle {
+        return new Rectangle(this.x, this.y, this.width, this.height);
+    }
+
+    public location(): Point {
+        return new Point(this.x, this.y);
     }
 }

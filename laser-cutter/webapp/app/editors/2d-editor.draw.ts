@@ -1,16 +1,15 @@
-import { Entity, IDrawContext, Draw } from "../candraw";
-import { Rectangle } from "../candraw/util/math";
+import { Entity, IDrawContext, Draw, Container, IEvent } from "../candraw";
+import { Rectangle, Point } from "../candraw/util/math";
 
-export class Grid extends Entity {
+export class GridBackground extends Entity {
 
     public constructor(
-        x: number,
-        y: number,
         width: number,
         height: number,
         public options: IGridOptions
     ) {
-        super(new Rectangle(x, y, width, height));
+        super(new Rectangle(0, 0, width, height));
+        this.zorder = -9999;
     }
 
     public draw(ctx: IDrawContext): void {
@@ -48,4 +47,43 @@ export interface IGridOptions {
     infoInterval: number;
     color: string;
     boldColor: string;
+}
+
+export class Grid extends Container {
+
+
+    public constructor(
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        public options: IGridOptions
+    ) {
+        super(new Rectangle(x, y, width, height));
+
+        this.interactive = true;
+        this.createBackground();
+    }
+
+    private createBackground(): void {
+        let grid = new GridBackground(this.area.width, this.area.height, this.options);
+        super.add(grid);
+    }
+
+    public onmove(e: IEvent): void {
+        if (e.stackIndex != 1) {
+            return;
+        }
+
+        let np = new Point(
+            Math.round(e.target.area.x / this.options.size) * this.options.size,
+            Math.round(e.target.area.y / this.options.size) * this.options.size
+        );
+
+        np = np.max(new Point(0, 0), np);
+        np = np.min(new Point(this.area.width - e.target.area.width, this.area.height - e.target.area.height), np);
+
+        e.target.area.x = np.x;
+        e.target.area.y = np.y;
+    }
 }

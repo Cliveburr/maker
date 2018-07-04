@@ -1,31 +1,64 @@
+import { Point } from "./math";
+import { Entity } from "../entity";
 
-export class Event<T> {
-    public raise: T;
+export interface IEvent {
+    stopPropagation: boolean;
+    mousePos?: Point;
+    mouseLeft?: boolean;
+    mouseRight?: boolean;
+    mouseWheel?: boolean;
+    target: Entity;
+    isTarget: boolean;
+    stack: Entity[];
+    stackIndex: number;
+    event: string;
+}
 
-    private subs: T[];
-    private forThis: any;
+export interface IEventDelegate {
+    (e: IEvent): void;
+}
 
-    constructor(forThis: any) {
-        this.subs = [];
-        this.forThis = forThis;
-        this.raise = <any>this.innerRaise;
+export interface IEventFuncs {
+    subs: { sy: Symbol, func: IEventDelegate }[];
+}
+
+export class EventsHandler {
+
+    private events: { [event: string]: IEventFuncs } = {};
+
+    public sub(event: string, func: IEventDelegate): Symbol {
+        let sy = Symbol();
+        let ev = this.events[event];
+        if (!ev) {
+            ev = {
+                subs: [{ sy, func }]
+            };
+            this.events[event] = ev;
+        }
+        else {
+            ev.subs.push({ sy, func });
+        }
+        return sy;
     }
 
-    private innerRaise(...args: any[]): void {
-        this.subs.forEach(e => {
-            var toCall: any = e;
-            toCall.apply(this.forThis, args);
-        });
+    public unsub(event: string, sy: Symbol): void {
+        let ev = this.events[event];
+        if (ev) {
+            let find = ev.subs.find(s => s.sy == sy);
+            let index = ev.subs.indexOf(find);
+            if (index > -1) {
+                ev.subs.splice(index, 1);
+            }
+        }
     }
 
-    public sub(fun: T): void {
-        this.subs.push(fun);
-    }
-
-    public remove(fun: T): boolean {
-        var i = this.subs.indexOf(fun);
-        if (i == -1) return false;
-        this.subs.splice(i, 1);
-        return true;
+    public getFuncsOf(event: string): IEventDelegate[] | null {
+        let ev = this.events[event];
+        if (ev) {
+            return ev.subs.map(s => s.func);
+        }
+        else {
+            return null;
+        }
     }
 }
