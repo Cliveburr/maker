@@ -6,7 +6,6 @@ import { IEvent } from "./util/event";
 export class Container extends Entity {
 
     private ents: Entity[] = [];
-    protected mouseOver: Entity | null;
 
     public constructor(
         public area: Rectangle
@@ -41,23 +40,20 @@ export class Container extends Entity {
         }
     }
 
+    public get entities(): Entity[] {
+        return this.ents;
+    }
+
     public add(e: Entity): void {
         e.parent = this;
         this.ents.push(e);
         this.needToDraw = true;
-        this.setAdd(e);
-    }
-
-    public setAdd(e: Entity): void {
-        if (this.canvas) {
-            e.canvas = this.canvas;
-            this.canvas.triggerEvent('add', e, false);
-        }
-        if (e.isContainer()) {
-            for (let ent of e.ents) {
-                this.setAdd(ent);
+        e.executeAcross(ae => {
+            if (this.canvas) {
+                ae.canvas = this.canvas;
+                this.canvas.triggerEvent('add', ae, false);
             }
-        }
+        });
     }
 
     public remove(e: Entity): void {
@@ -82,5 +78,15 @@ export class Container extends Entity {
             }
         }
         return null;
+    }
+
+    public calculatePointInMe(p: Point): Point {
+        let inMe = p.sub(this.area.location());
+        if (this.parent) {
+            return this.parent.calculatePointInMe(inMe);
+        }
+        else {
+            return inMe;
+        }
     }
 }

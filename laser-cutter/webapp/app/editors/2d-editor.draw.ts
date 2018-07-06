@@ -1,5 +1,4 @@
-import { Entity, IDrawContext, Draw, Container, IEvent } from "../candraw";
-import { Rectangle, Point } from "../candraw/util/math";
+import { Entity, IDrawContext, Draw, Container, IEvent, Rectangle, Point, Draggable, Selectable } from "../candraw";
 
 export class GridBackground extends Entity {
 
@@ -85,5 +84,58 @@ export class Grid extends Container {
 
         e.target.area.x = np.x;
         e.target.area.y = np.y;
+    }
+}
+
+export class Figures extends Entity {
+
+    public interactive = true;
+    public drag: Draggable;
+    public select: Selectable;
+
+    private points: Point[] = [];
+    private formats: Format[] = [];
+
+    public constructor(
+        area: Rectangle
+    ) {
+        super(area);
+        this.select = new Selectable(this);
+        this.drag = new Draggable(this);
+    }
+
+    public draw(ctx: IDrawContext): void {
+
+        this.cache = new Draw(this.area.width, this.area.height);
+
+        let pointIndex = 0;
+        for (let format of this.formats) {
+
+            let points = this.points.slice(pointIndex, pointIndex + format.pointsUsed);
+
+            format.draw(this.cache, points);
+
+            pointIndex += format.pointsUsed - 1;
+        }
+
+        this.needToDraw = false;
+    }
+
+    public add(format: Format, points: Point[]): void {
+        this.formats.push(format);
+        this.points.push(...points);
+        this.needToDraw = true;
+    }
+}
+
+export class Format {
+
+    public pointsUsed: number = 2;
+
+    public draw(draw: Draw, points: Point[]): void {
+
+        draw
+            .strokeStyle('#FF0000')
+            .line(points[0], points[1])
     }
 }

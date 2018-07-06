@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'publicLayout',
     templateUrl: 'public-layout.component.html',
+    styleUrls: ['public-layout.component.scss']
 })
 export class PublicLayoutComponent {
 

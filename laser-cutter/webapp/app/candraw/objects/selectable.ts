@@ -45,7 +45,9 @@ export class Selectable {
     }
 
     private canvas_mousedown(e: IEvent): void {
-        if (!this.control.area.isInside(e.mousePos) && !this.avoidSameEvent && e.target != this.entity) {
+        let posInMe = this.entity.parent.calculatePointInMe(e.mousePos);
+
+        if (!this.control.area.isInside(posInMe) && !this.avoidSameEvent) {
             this.unSelect(e);
         }
         this.avoidSameEvent = false;

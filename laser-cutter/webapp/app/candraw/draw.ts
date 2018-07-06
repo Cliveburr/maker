@@ -1,4 +1,5 @@
 import { Entity } from "./entity";
+import { Point } from "./util/math";
 
 export class Draw {
 
@@ -59,7 +60,24 @@ export class Draw {
         return this;
     }
 
-    public line(x0: number, y0: number, x1: number, y1: number): this {
+    public line(p0: Point, p1: Point): this;
+    public line(x0: number, y0: number, x1: number, y1: number): this;
+    public line(a0: number | Point, a1: number | Point, a2?: number, a3?: number): this {
+        let x0: number, y0: number, x1: number, y1: number;
+
+        if (a0 instanceof Point && a1 instanceof Point) {
+            x0 = a0.x;
+            y0 = a0.y;
+            x1 = a1.x;
+            y1 = a1.y;
+        }
+        else {
+            x0 = <number>a0;
+            y0 = <number>a1;
+            x1 = a2;
+            y1 = a3;
+        }
+
         this.ctx.beginPath();
         this.ctx.moveTo(x0 + 0.5, y0 + 0.5);
         this.ctx.lineTo(x1 + 0.5, y1 + 0.5);
@@ -76,9 +94,23 @@ export class Draw {
         this.ctx.strokeRect(x, y, w, h);
         return this;
     }
+
+    public scale(x: number, y: number): this {
+        this.ctx.scale(x, y);
+        return this;
+    }
+
+    public save(): this {
+        this.ctx.save();
+        return this;
+    }
+
+    public restore(): this {
+        this.ctx.restore();
+        return this;
+    }
 }
 
 export interface IDrawContext {
     time: number;
-    mouseOver: Entity | null;
 }

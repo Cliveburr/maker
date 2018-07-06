@@ -14,6 +14,7 @@ export class Canvas extends Container {
     public typeCanvas = true;
     public selected: Selectable | null;
     public globalEvent = new EventsHandler();
+    public zoom: number = 1;
 
     public constructor(
         element: HTMLCanvasElement
@@ -31,8 +32,7 @@ export class Canvas extends Container {
 
     private tick(time: number): void {
         let ctx = <IDrawContext>{
-            time,
-            mouseOver: this.mouseOver
+            time
         };
 
         this.draw(ctx);
@@ -58,6 +58,7 @@ export class Canvas extends Container {
         event('mousemove', this.computeMouseEvent.bind(this, 'mousemove'));
         event('mouseenter', this.computeMouseEvent.bind(this, 'mousemove'));
         event('mouseout', this.computeMouseEvent.bind(this, 'mousemove'));
+        event('wheel', this.computeMouseEvent.bind(this, 'wheel'));
     }
 
     private onUpdateArea(): void {
@@ -69,14 +70,22 @@ export class Canvas extends Container {
         super.draw(ctx);
 
         this.drawEl
+            .save()
+            .scale(this.zoom, this.zoom)
             .background('#FFFFFF')
-            .drawEntity(this);
+            .drawEntity(this)
+            .restore();
     }
 
-    public computeMouseEvent(event: string, ev: MouseEvent): void {
-        let mousePos = new Point(ev.clientX - this.rect.left, ev.clientY - this.rect.top);
+    private computeMouseEvent(event: string, ev: MouseEvent & WheelEvent): void {
+        let mousePos = new Point(ev.clientX - this.rect.left + window.scrollX, ev.clientY - this.rect.top + window.scrollY)
+            .div(this.zoom);
         let stack = this.mountStackByPoint(mousePos);
         let target = stack[0];
+
+        if (event == 'mousedown') {
+            //console.log(stack);
+        }
 
         let e: IEvent = {
             stopPropagation: false,
@@ -84,11 +93,15 @@ export class Canvas extends Container {
             mouseLeft: (ev.buttons & 1) == 1,
             mouseRight: (ev.buttons & 2) == 2,
             mouseWheel: (ev.buttons & 4) == 4,
+            wheelDeltaX: ev.deltaX,
+            wheelDeltaY: ev.deltaY,
+            wheelDeltaZ: ev.deltaZ,
             target: target,
             isTarget: true,
             event: event,
             stack: stack,
-            stackIndex: 0
+            stackIndex: 0,
+            ctrlKey: ev.ctrlKey
         };
 
         for (let entity of stack) {
@@ -112,13 +125,18 @@ export class Canvas extends Container {
         let tr: Entity[] = [];
         let ent: Entity | null = this;
         let onp = p;
+
+        if (this.area.isInside(p)) {
+            tr.push(this);
+        }
+
         while(ent) {
-            if (ent.area.isInside(onp)) {
-                tr.unshift(ent);
-            }
             if (ent.isContainer()) {
-                onp = onp.sub(ent.area.location());
                 ent = ent.getEntityOn(onp);
+                if (ent) {
+                    tr.unshift(ent);
+                    onp = onp.sub(ent.area.location());
+                }
             }
             else {
                 ent = null;

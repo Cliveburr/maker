@@ -4,4 +4,7 @@ export * from './entity';
 export * from './draw';
 export * from './objects/rect';
 export * from './objects/text';
+export * from './objects/draggable';
+export * from './objects/selectable';
 export * from './util/event';
+export * from './util/math';

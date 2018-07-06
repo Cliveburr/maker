@@ -12,7 +12,7 @@ export abstract class Entity {
     public zorder: number = 0;
     public cache: Draw;
     public parent: Container;
-    public canvas: Canvas
+    public canvas: Canvas;
 
     public event = new EventsHandler();
 
@@ -32,6 +32,19 @@ export abstract class Entity {
         this.area.y = pos.y;
         this.parent.needToDraw = true;
         this.canvas.triggerEvent('move', this, true);
+    }
+
+    public executeAcross(exec: (e: Entity) => void): void {
+        this.executeAcrossRecur(this, exec);
+    }
+
+    private executeAcrossRecur(e: Entity, exec: (e: Entity) => void): void {
+        exec(e);
+        if (e.isContainer()) {
+            for (let ent of e.entities) {
+                this.executeAcrossRecur(ent, exec);
+            }
+        }
     }
 
     // public onmouseenter(): void {

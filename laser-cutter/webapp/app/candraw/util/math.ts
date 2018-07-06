@@ -32,6 +32,14 @@ export class Point {
             Math.max(...points.map(p => p.y))
         );
     }
+
+    public multi(value: number): Point {
+        return new Point(this.x * value, this.y * value);
+    }
+
+    public div(value: number): Point {
+        return new Point(this.x / value, this.y / value);
+    }
 }
 
 export class Size {
@@ -108,6 +116,10 @@ export class Rectangle {
                 this.width,
                 this.height);
         }
+    }
+
+    public multi(value: number): Rectangle {
+        return new Rectangle(this.x * value, this.y * value, this.width * value, this.height * value);
     }
 
     public expand(value: number): Rectangle {

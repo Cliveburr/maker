@@ -7,8 +7,6 @@ import { Selectable } from "./selectable";
 
 export class Rect extends Entity {
 
-    private isPress = false;
-
     public interactive = true;
     public drag: Draggable;
     public select: Selectable;

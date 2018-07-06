@@ -34,6 +34,9 @@ function createWindow () {
 	// })
 	globalShortcut.register('CommandOrControl+R', function() {
 		win.reload()
+  })
+	globalShortcut.register('CommandOrControl+T', function() {
+		win.webContents.openDevTools()
 	})
 }
 

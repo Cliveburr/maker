@@ -7,11 +7,15 @@ export interface IEvent {
     mouseLeft?: boolean;
     mouseRight?: boolean;
     mouseWheel?: boolean;
+    wheelDeltaX?: number;
+    wheelDeltaY?: number;
+    wheelDeltaZ?: number;
     target: Entity;
     isTarget: boolean;
     stack: Entity[];
     stackIndex: number;
     event: string;
+    ctrlKey?: boolean;
 }
 
 export interface IEventDelegate {

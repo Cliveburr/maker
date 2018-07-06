@@ -1,5 +1,17 @@
 
+:host() {
+    background-color: antiquewhite;
+    display: flex;
+    flex-grow: 1;
+}
+
+.editor-props {
+    width: 150px;
+    background-color: azure;
+}
+
 .editor-area {
-    //background-color: antiquewhite;
-    height: 100%;   
+    background-color: coral;
+    flex-grow: 1;
+    overflow: scroll;
 }
