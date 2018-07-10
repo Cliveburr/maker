@@ -37,9 +37,12 @@
                                     <Button Margin="5" Content="Get Channel Info" Width="100" Click="btChannel0_GetChannelInfo_Click"></Button>
                                     <Button Margin="5" Content="Set Channel Info" Width="100" Click="btChannel0_SetChannelInfo_Click"></Button>
                                 </StackPanel>
-                                <ComboBox x:Name="cbChannel0_Mode" Margin="5" SelectedIndex="0">
-                                    <ComboBoxItem Content="Full Step" />
-                                </ComboBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton x:Name="chChannel0_Active" Margin="5" Width="100">Active</ToggleButton>
+                                    <ComboBox x:Name="cbChannel0_Mode" Margin="5" SelectedIndex="0" Width="300">
+                                        <ComboBoxItem Content="Full Step" />
+                                    </ComboBox>
+                                </StackPanel>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Margin="5" DockPanel.Dock="Top" Header="Step:">

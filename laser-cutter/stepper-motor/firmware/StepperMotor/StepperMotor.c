@@ -12,7 +12,18 @@ void DoChannelPWM(unsigned char index);
 
 void StepperMotor_Initialize() {
     
-    StepperMotor_Channels[0].bits.active = 1;
+    ENABLE = 0;
+
+    // Defautls value for channel 0
+    C0_AAH = 0;
+    C0_AAL = 0;
+    C0_ABH = 0;
+    C0_ABL = 0;
+    StepperMotor_Channels[0].bits.active = 0;
+    StepperMotor_Channels[0].bits.foward = 1;
+    StepperMotor_Channels[0].bits.pwmState = 0;
+    StepperMotor_Channels[0].bits.continuous = 0;
+    StepperMotor_Channels[0].walkSteps = 0;
     StepperMotor_Channels[0].stepTimer.value = 24000000;
     StepperMotor_Channels[0].stepTimer.tag = 0;
     StepperMotor_Channels[0].stepTimer.callback = OnePhaseFullStep_StepTimerRotine;
@@ -20,6 +31,7 @@ void StepperMotor_Initialize() {
     StepperMotor_Channels[0].pwmHigh = 1500000;
     StepperMotor_Channels[0].pwmLow = 4500000;
     StepperMotor_Channels[0].pwmTimer.value = StepperMotor_Channels[0].pwmHigh;  // ao redefinir os pwm tem q setar o value tbm
+    StepperMotor_Channels[0].pwmTimer.tag = 0;
     StepperMotor_Channels[0].pwmTimer.callback = DoChannelPWM;
 
     ENABLE = 1;

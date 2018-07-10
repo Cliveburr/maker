@@ -7,9 +7,10 @@ namespace StepperMotorInterface.StepperMotor.Message
     {
         public int Index { get; set; }
         public ChannelModeEnum Mode { get; set; }
+        public bool Active { get; set; }
         public uint RunningValue { get; set; }
-        public ushort TorqueOnValue { get; set; }
-        public ushort TorqueOffValue { get; set; }
+        public uint TorqueOnValue { get; set; }
+        public uint TorqueOffValue { get; set; }
 
         public byte[] GetBytes()
         {
@@ -21,6 +22,8 @@ namespace StepperMotorInterface.StepperMotor.Message
                 binary.Write((byte)Index);
 
                 binary.Write((byte)Mode);
+
+                binary.Write((byte)(Active ? 1: 0));
 
                 binary.Write(RunningValue);
 

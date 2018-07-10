@@ -59,6 +59,7 @@
     <Compile Include="StepperMotor\Message\IMessageResponse.cs" />
     <Compile Include="StepperMotor\Message\IMessageRequest.cs" />
     <Compile Include="StepperMotor\Enum\MessageIndexEnum.cs" />
+    <Compile Include="StepperMotor\Message\SetChannelStepsMessage.cs" />
     <Compile Include="StepperMotor\StepperMotorDriver.cs" />
     <Compile Include="StepperMotor\Transport\ITransport.cs" />
     <Compile Include="Program.cs" />

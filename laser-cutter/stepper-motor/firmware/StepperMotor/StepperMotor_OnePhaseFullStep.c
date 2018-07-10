@@ -11,6 +11,9 @@
 void OnePhaseFullStep_StepTimerRotine(unsigned char index) {
     struct StepperMotor_ChannelStruct* channel = &StepperMotor_Channels[index];
     
+    if (!(channel->bits.continuous || channel->walkSteps > 0))
+        return;
+
     OnePhaseFullStep_SetChannelValue(index, channel->step, 0);
     
     if (channel->bits.foward) {
@@ -30,6 +33,12 @@ void OnePhaseFullStep_StepTimerRotine(unsigned char index) {
 
     channel->bits.pwmState = 1;
     TimerEventRotine_Reset(&channel->pwmTimer);
+
+    if (!channel->bits.continuous) {
+        channel->walkSteps--;
+    }
+
+    //TODO: determinar o WALK_SIGNAL baseado se tem steps ou se esta continuous setado
 }
 
 void OnePhaseFullStep_SetChannelValue(unsigned char index, unsigned char step, unsigned char value) {

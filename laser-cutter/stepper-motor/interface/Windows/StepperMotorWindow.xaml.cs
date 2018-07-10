@@ -50,12 +50,12 @@ namespace StepperMotorInterface.Windows
             }
         }
 
-        private async Task btGetDriverInfo_Click(object sender, RoutedEventArgs e)
+        private async void btGetDriverInfo_Click(object sender, RoutedEventArgs e)
         {
             await GetDriverInfo();
         }
 
-        private async Task btChannel0_GetChannelInfo_Click(object sender, RoutedEventArgs e)
+        private async void btChannel0_GetChannelInfo_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -77,19 +77,21 @@ namespace StepperMotorInterface.Windows
             }
         }
 
-        private async Task btChannel0_SetChannelInfo_Click(object sender, RoutedEventArgs e)
+        private async void btChannel0_SetChannelInfo_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 var mode = (ChannelModeEnum)cbChannel0_Mode.SelectedIndex;
 
+                var active = chChannel0_Active.IsChecked ?? false;
+
                 var runningValue = _driver.TransformFrequencyIntoValue(fcChannel0_Running.GetFrequency());
 
                 var totalTorque = _driver.TransformFrequencyIntoValue(fcChannel0_Torque.GetFrequency());
-                var torqueOnValue = (ushort)((totalTorque * slChannel0_TorqueDuty.Value) / 100);
-                var torqueOffValue = (ushort)(totalTorque - torqueOnValue);
+                var torqueOnValue = (uint)((totalTorque * slChannel0_TorqueDuty.Value) / 100);
+                var torqueOffValue = (uint)(totalTorque - torqueOnValue);
 
-                await _driver.SetChannelInfo(0, mode, runningValue, torqueOnValue, torqueOffValue);
+                await _driver.SetChannelInfo(0, mode, active, runningValue, torqueOnValue, torqueOffValue);
             }
             catch (Exception err)
             {
@@ -97,7 +99,7 @@ namespace StepperMotorInterface.Windows
             }
         }
 
-        private async Task btChannel0_SendSteps_Click(object sender, RoutedEventArgs e)
+        private async void btChannel0_SendSteps_Click(object sender, RoutedEventArgs e)
         {
             try
             {

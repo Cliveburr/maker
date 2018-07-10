@@ -44,12 +44,13 @@ namespace StepperMotorInterface.StepperMotor
             return await _transport.SendMessageWithResonse<GetChannelInfoResponse>(request);
         }
 
-        public async Task SetChannelInfo(int index, ChannelModeEnum mode, uint runningValue, ushort torqueOnValue, ushort torqueOffValue)
+        public async Task SetChannelInfo(int index, ChannelModeEnum mode, bool active, uint runningValue, uint torqueOnValue, uint torqueOffValue)
         {
             var request = new SetChannelInfoRequest
             {
                 Index = index,
                 Mode = mode,
+                Active = active,
                 RunningValue = runningValue,
                 TorqueOnValue = torqueOnValue,
                 TorqueOffValue = torqueOffValue

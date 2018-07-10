@@ -25,8 +25,8 @@ namespace StepperMotorInterface.StepperMotor.Message
     {
         public ChannelModeEnum Mode { get; set; }
         public uint RunningValue { get; set; }
-        public ushort TorqueOnValue { get; set; }
-        public ushort TorqueOffValue { get; set; }
+        public uint TorqueOnValue { get; set; }
+        public uint TorqueOffValue { get; set; }
 
         public void Parse(byte[] msg)
         {
@@ -37,9 +37,9 @@ namespace StepperMotorInterface.StepperMotor.Message
 
                 RunningValue = binary.ReadUInt32();
 
-                TorqueOnValue = binary.ReadUInt16();
+                TorqueOnValue = binary.ReadUInt32();
 
-                TorqueOffValue = binary.ReadUInt16();
+                TorqueOffValue = binary.ReadUInt32();
             }
         }
     }
