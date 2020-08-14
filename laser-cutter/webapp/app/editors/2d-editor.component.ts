@@ -32,7 +32,7 @@ export interface IPosition {
 })
 export class TwoDEditorComponent implements OnInit {
 
-    @ViewChild('canvas')
+    @ViewChild('canvas', null)
     public canvas: ElementRef;
     public options: ITwoDEditorOptions;
 

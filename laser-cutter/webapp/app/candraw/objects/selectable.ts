@@ -68,7 +68,7 @@ export class Selectable {
     }
 
     private entity_move(e: IEvent): void {
-        setTimeout(_ => {
+        setTimeout(() => {
             this.control.reposition();
             this.control.parent.needToDraw = true;
         }, 1);
