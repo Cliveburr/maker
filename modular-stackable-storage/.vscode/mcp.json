@@ -1,0 +1,10 @@
+{
+    "servers": {
+        "freecad": {
+            "command": "uvx",
+            "args": [
+                "freecad-mcp"
+            ]
+        }
+    }
+}

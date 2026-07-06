@@ -1,0 +1,14 @@
+
+
+https://lista.mercadolivre.com.br/_CustId_90386289
+
+
+
+
+Quero fazer o tamanho do nicho ser por modulo cada modulo tendo tamanho de 55mm
+
+Ai no meio de cada modulo eu fiz um conector de 10mm, então eu centralizo esse meu conector a 22,5mm das bordas os primeiros e ai faço extensão linear
+
+Porém fazendo 3 modulos as contas bates certo, fica 17,5mm 
+
+22.5mm + 10mm + 22.5mm
